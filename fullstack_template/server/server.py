@@ -18,6 +18,9 @@ s.connect(("10.65.4.142",700))
 def index():
     return render_template('public/index.html')
 
+@app.route('/app.html')
+def index():
+    return render_template('public/app.html')
 
 @app.route('/hello') # take note of this decorator syntax, it's a common pattern
 def hello():
