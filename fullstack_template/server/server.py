@@ -24,14 +24,27 @@ def hello():
     # It is good practice to only call a function in your route end-point,
     # rather than have actual implementation code here.
     # This allows for easier unit and integration testing of your functions.
-    return get_SThello()
+    return get_hello()
 
 
 def get_hello():
-    greeting_list = ['Ciao', 'Hei', 'Salut', 'Hola', 'Hallo', 'Hej']
+    #greeting_list = ['Ciao', 'Hei', 'Salut', 'Hola', 'Hallo', 'Hej']
     #data = { "ID": "123", "NAME": "JOHN" }
-    return random.choice(greeting_list)
+    #return random.choice(greeting_list)
     #return data
+    js = {}
+    js['Current'] = 1
+    js['Voltage'] = 2
+    js['Speed'] = 3
+    js['Heat Input'] = 4
+    js["TIME"] = time.strftime("%H:%M:%S")
+    js["12 TIME"] = time.strftime("%I:%M:%S")
+    js["OSC"] = 5
+    js["AVC"] = 6
+    js["TEST"] = 7
+    json_data = json.dumps(js)
+
+    return json_data
 
 
 
@@ -59,14 +72,14 @@ def get_SThello():
     value = struct.unpack("HHHHH", bytearray(b))
 
     js = {}
-    js['Current'] = value[0];
-    js['Voltage'] = value[1];
-    js['Speed'] = value[2];
-    js['Heat Input'] = value[3];
+    js['Current'] = value[0]
+    js['Voltage'] = value[1]
+    js['Speed'] = value[2]
+    js['Heat Input'] = value[3]
     js["TIME"] = time.strftime("%H:%M:%S")
     js["12 TIME"] = time.strftime("%I:%M:%S")
-    js["OSC"] = "0";
-    js["AVC"] = "9";
+    js["OSC"] = "0"
+    js["AVC"] = "9"
     js["TEST"] = "10"
     json_data = json.dumps(js)
 
