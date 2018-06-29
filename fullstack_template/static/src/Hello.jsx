@@ -38,7 +38,7 @@ export default class Hello extends React.Component {
     }
 
     async getSTPythonHello() {
-        axios.post('https://e06d66e7.ngrok.io/', JSON.stringify({device: "DESK", status : "OFF"}))
+        axios.post('....', JSON.stringify({device: "DESK", status : "OFF"}))
         .then(res =>{
             const posts = res.data;
             this.setState({posts});
