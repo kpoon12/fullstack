@@ -41,7 +41,6 @@ export default class Hello extends React.Component {
         .then(res =>{
             const posts = JSON.parsea(res.data);
             this.setState({posts});
-
             //this.personaliseGreeting(posts.aString);
         })
         .catch(err => {
