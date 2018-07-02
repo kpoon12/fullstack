@@ -120,7 +120,7 @@ def get_SThello():
     print type(xops)
     print bytearray(xops)
 
-    #Send default data to STM32
+    #Send COM_TEST data to STM32
     WeldLoopSocket.send(COM_TEST + bytearray(xops))
     data = WeldLoopSocket.recv(1024)
 
