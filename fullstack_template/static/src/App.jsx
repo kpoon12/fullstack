@@ -33,8 +33,7 @@ export default class App extends React.Component {
 
 
                 <Hello name='M317' />
-                <Pro color="primary"/>
-                <Schedule/>
+
 
                 </div>
             </PageHeader>

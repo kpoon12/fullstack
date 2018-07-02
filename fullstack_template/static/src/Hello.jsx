@@ -26,8 +26,7 @@ export default class Hello extends React.Component {
 
     getPythonHello() {
         $.get(window.location.href + 'hello', (data) => {
-                //console.log(data);
-            var out = "";
+            //console.log(data);
             const posts = JSON.parse(data);
             this.setState({
                 posts
@@ -38,9 +37,9 @@ export default class Hello extends React.Component {
     }
 
     async getSTPythonHello() {
-        axios.post('....', JSON.stringify({device: "DESK", status : "OFF"}))
+        axios.get('http://10.65.4.128:5000/hello')
         .then(res =>{
-            const posts = res.data;
+            const posts = JSON.parsea(res.data);
             this.setState({posts});
 
             //this.personaliseGreeting(posts.aString);
