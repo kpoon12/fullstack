@@ -1,7 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import { Grid, Row, Col } from "react-bootstrap";
 import Button from "@material-ui/core/Button";
-import axios from "axios";
 
 var $ = require('jquery');
 
@@ -25,35 +24,35 @@ export default class Hello extends React.Component {
     }
 
     getPythonHello() {
-        $.get(window.location.href + 'hello', (data) => {
-            //console.log(data);
-            const posts = JSON.parse(data);
-            this.setState({
-                posts
-              });
+        //$.get(window.location.href + 'hello', (data) => {
+      //var mybody = {"device": "CAMERA", "status" : "OFF"};
+      var mybody = { device:'CAMERA', status:'OFF', test:"123" };
+      const urlString ="http://localhost:5000/fakedata";
+      $.post(urlString, JSON.stringify(mybody), (data) => {
+          const posts = JSON.parse(data);
+          this.setState({posts});
             //this.personaliseGreeting(x);
-
-        });
+      });
     }
 
     async getSTPythonHello() {
-        axios.get('http://10.65.4.128:5000/hello')
-        .then(res =>{
-            const posts = JSON.parsea(res.data);
-            this.setState({posts});
-            //this.personaliseGreeting(posts.aString);
-        })
-        .catch(err => {
-            // Something went wrong. Save the error in state and re-render.
-            alert(err);
-        });
+        //$.get(window.location.href + 'hello', (data) => {
+            var mybody = {"device": "CAMERA", "status" : "OFF"};
+            const urlString ="http://localhost:5000/hello"
+
+            $.get(urlString, (data) => { 
+                const posts = JSON.parse(data);
+                this.setState({posts});
+
+                //this.personaliseGreeting(x);
+            });
     }
 
 
     timer(){
         var d = new Date();
-        this.state.clock = d.getHours() + ":" + d.getSeconds(); 
-        this.setState({ clock: this.state.clock });
+
+        this.setState({ clock: d.getHours() + ":" + d.getSeconds() });
         //this.getPythonHello();
     }
       
@@ -82,7 +81,6 @@ export default class Hello extends React.Component {
         // keys from state. This saves having to write "this.state.X" everwhere.
         const { posts } = this.state;
         var rows = [];
-        var values = [];
         for(var key in posts){
             if(posts.hasOwnProperty(key)){
                 var out = key + " " + posts[key];

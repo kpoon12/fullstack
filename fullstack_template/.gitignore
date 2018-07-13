@@ -1,0 +1,6 @@
+static/dist/
+static/node_modules/
+static/npm-debug.log
+static/.DS_Store
+static/package-lock.json
+static/build/

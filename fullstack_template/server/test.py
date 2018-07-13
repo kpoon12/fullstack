@@ -1,13 +1,11 @@
 import random
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template
 import time
 import socket
 import json
 import struct
-from flask_cors import CORS
 
-app = Flask(__name__, static_folder='../static/dist', template_folder='../static')
-CORS(app)
+app = Flask(__name__, static_folder='../static/build/static', template_folder='../static')
 
 #TEST Commnuication to WELDLOOP
 #Server to weldloop message
@@ -79,31 +77,15 @@ WeldLoopSocket.connect(("10.65.4.142",700))
 
 @app.route('/')
 def index():
-    return render_template('public/index.html')
+    return render_template('build/index.html')
 
 
-@app.route('/hello', methods=['GET', 'POST']) # take note of this decorator syntax, it's a common pattern
+@app.route('/hello') # take note of this decorator syntax, it's a common pattern
 def hello():
     # It is good practice to only call a function in your route end-point,
     # rather than have actual implementation code here.
     # This allows for easier unit and integration testing of your functions.
     return get_SThello()
-
-@app.route('/fakedata', methods=['GET', 'POST']) # take note of this decorator syntax, it's a common pattern
-def fakehello():
-    # It is good practice to only call a function in your route end-point,
-    # rather than have actual implementation code here.
-    # This allows for easier unit and integration testing of your functions.
-    request_json = request.get_json(force=True)
-    value1 = request_json['device']
-    value2 = request_json['status']
-    js = {}
-    js['Current'] = value1
-    js['Voltage'] = value2
-    json_data = json.dumps(js)
-    
-    #return jsaon data
-    return json_data
 
 #TEST send JSON data back to react application
 def get_hello():
