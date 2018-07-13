@@ -21,6 +21,7 @@ router.get('/hello', cors(), function(req, res) {
 });
 
 router.post('/fakedata', cors(), function(req, res) {
+    
     req.on('data', function(data){
         var parsed = JSON.parse(data);
         console.log(parsed.device, parsed.status);
