@@ -95,11 +95,10 @@ def fakehello():
     # rather than have actual implementation code here.
     # This allows for easier unit and integration testing of your functions.
     request_json = request.get_json(force=True)
-    value1 = request_json['device']
-    value2 = request_json['status']
     js = {}
-    js['Current'] = value1
-    js['Voltage'] = value2
+    js['GroupName'] = request_json['GroupName']
+    js['ScheduleName'] = request_json['ScheduleName']
+    js['Size'] = request_json['Size']
     json_data = json.dumps(js)
     
     #return jsaon data
