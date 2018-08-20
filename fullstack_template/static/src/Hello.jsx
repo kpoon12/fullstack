@@ -17,6 +17,8 @@ export default class Hello extends React.Component {
         // This binding is necessary to make `this` work in the callback
         this.getPythonHello = this.getPythonHello.bind(this);
         this.getSTPythonHello = this.getSTPythonHello.bind(this);
+        this.getWeldLoop = this.performSearch.bind(this);
+
     }
 
     personaliseGreeting(greeting) {
@@ -39,15 +41,35 @@ export default class Hello extends React.Component {
         //$.get(window.location.href + 'hello', (data) => {
             var mybody = {"device": "CAMERA", "status" : "OFF"};
             const urlString ="http://localhost:5000/hello"
-
+            //const urlString ="http://10.65.4.143/f_weld.html";
             $.get(urlString, (data) => { 
+
                 const posts = JSON.parse(data);
                 this.setState({posts});
-
+                alert("Psssss");
                 //this.personaliseGreeting(x);
             });
-    }
 
+    }
+    performSearch(searchTerm) {
+        console.log("Perform search using moviedb")
+        const urlString = "http://10.65.4.143/f_weld.html";// + searchTerm
+        $.ajax({
+          url: urlString,
+          success: (searchResults) => {
+            console.log("Fetched data successfully")
+            // console.log(searchResults)
+            const results = searchResults.results
+            // console.log(results[0])
+            this.setState({posts: results.Updated})
+            alert("passed");
+          },
+          error: (xhr, status, err) => {
+            console.error("Failed to fetch data")
+            alert("passed")
+          }
+        })
+      }
 
     timer(){
         var d = new Date();
@@ -110,6 +132,9 @@ export default class Hello extends React.Component {
                         Say Hello!
                         </Button>
                         <Button  variant="contained" color="primary" onClick={this.getSTPythonHello}>
+                        ST Hello!
+                        </Button>
+                        <Button  variant="contained" color="primary" onClick={this.getWeldLoop}>
                         ST Hello!
                         </Button>
                         </div>

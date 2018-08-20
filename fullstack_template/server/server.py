@@ -74,7 +74,7 @@ LAST_COMMAND		=	GUI_CONNECTED
 #Connect to STM32 
 WeldLoopSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 WeldLoopSocket.settimeout(5)
-WeldLoopSocket.connect(("10.65.4.142",700))
+WeldLoopSocket.connect(("10.65.4.143",700))
 
 
 @app.route('/')
