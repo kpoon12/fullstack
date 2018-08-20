@@ -4,6 +4,8 @@ import Button from "@material-ui/core/Button";
 
 var $ = require('jquery');
 
+const url = "https://0e3087a7.ngrok.io";
+
 export default class Hello extends React.Component {
     constructor(props) {
         super(props);
@@ -29,7 +31,7 @@ export default class Hello extends React.Component {
         //$.get(window.location.href + 'hello', (data) => {
       //var mybody = {"device": "CAMERA", "status" : "OFF"};
       var mybody = { device:'CAMERA', status:'OFF', test:"123" };
-      const urlString ="http://localhost:5000/fakedata";
+      const urlString = url + "/fakedata";
       $.post(urlString, JSON.stringify(mybody), (data) => {
           const posts = JSON.parse(data);
           this.setState({posts});
@@ -40,36 +42,36 @@ export default class Hello extends React.Component {
     async getSTPythonHello() {
         //$.get(window.location.href + 'hello', (data) => {
             var mybody = {"device": "CAMERA", "status" : "OFF"};
-            const urlString ="http://localhost:5000/hello"
+            const urlString = url + "/hello"
             //const urlString ="http://10.65.4.143/f_weld.html";
             $.get(urlString, (data) => { 
 
                 const posts = JSON.parse(data);
                 this.setState({posts});
-                alert("Psssss");
                 //this.personaliseGreeting(x);
             });
 
     }
+
+
+
     performSearch(searchTerm) {
         console.log("Perform search using moviedb")
         const urlString = "http://10.65.4.143/f_weld.html";// + searchTerm
+        alert("Try");
+
         $.ajax({
-          url: urlString,
-          success: (searchResults) => {
-            console.log("Fetched data successfully")
-            // console.log(searchResults)
-            const results = searchResults.results
-            // console.log(results[0])
-            this.setState({posts: results.Updated})
-            alert("passed");
-          },
-          error: (xhr, status, err) => {
-            console.error("Failed to fetch data")
-            alert("passed")
-          }
-        })
-      }
+            url: urlString,
+            type: 'GET',
+            dataType: "json",
+            success: displayAll,
+            error: displayAll
+        });
+        
+        function displayAll(data){
+            alert(data);
+        }
+    }
 
     timer(){
         var d = new Date();
