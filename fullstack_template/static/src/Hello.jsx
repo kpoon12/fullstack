@@ -1,13 +1,13 @@
 import React from "react";
 import { Grid, Row, Col } from "react-bootstrap";
 import Button from "@material-ui/core/Button";
-import Iframe from "react-iframe";
 
 var $ = require('jquery');
-
+var whichdata = 0;
 const url = "http://10.65.4.143:180";
 
 export default class Hello extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {greeting: 'Hello ' + this.props.name,
@@ -49,7 +49,6 @@ export default class Hello extends React.Component {
   }
 
   async getSingle() {
-    var mybody = {"device": "CAMERA", "status" : "OFF"};
     const urlString = url + "/APIsingle"
     $.get(urlString, (data) => { 
       const single = JSON.parse(data);
@@ -58,7 +57,6 @@ export default class Hello extends React.Component {
   }
 
   async getMulti() {
-    var mybody = {"device": "CAMERA", "status" : "OFF"};
     const urlString = url + "/APImulti"
     $.get(urlString, (data) => { 
       const multi = JSON.parse(data);
@@ -66,11 +64,19 @@ export default class Hello extends React.Component {
     });
   }
   
+
   timer(){
     var d = new Date();
 
     this.setState({ clock: d.getHours() + ":" + d.getSeconds() });
-    //this.getPythonHello();
+    if(whichdata === 0){
+        this.getSingle();
+        whichdata = 1;
+    }
+    else{
+        this.getMulti();
+        whichdata = 0;
+    }
   }
       
   componentDidMount(){
