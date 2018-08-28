@@ -3,7 +3,7 @@ import Hello from "./Hello";
 import Pro from "./Progress";
 
 
-import HeaderBackgroundImage from './images/header.jpg';
+import HeaderBackgroundImage from './images/AMI.jpg';
 import { PageHeader } from "react-bootstrap";
 
 require('./css/fullstack.css');
@@ -22,9 +22,9 @@ export default class App extends React.Component {
         return (
             <PageHeader>
                 <div className='header-contents'>
-                    {this.addHeaderImg()}
+                    {/* {this.addHeaderImg()} */}
                     <Pro color="secondary"/>
-                    <div>What happy?</div>
+                    <div>M317</div>
                     <Pro color="secondary"/>
                     <Hello name='M317' />
                 </div>

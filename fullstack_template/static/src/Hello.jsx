@@ -1,92 +1,85 @@
 import React from "react";
 import { Grid, Row, Col } from "react-bootstrap";
 import Button from "@material-ui/core/Button";
+import Iframe from "react-iframe";
 
 var $ = require('jquery');
 
-const url = "https://0e3087a7.ngrok.io";
+const url = "http://10.65.4.143:180";
 
 export default class Hello extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {greeting: 'Hello ' + this.props.name,
-                      clock: "00:00",
-                      posts: [],
-                      loading: true,
-                      error: null
-                     };
+  constructor(props) {
+    super(props);
+    this.state = {greeting: 'Hello ' + this.props.name,
+                  clock: "00:00",
+                  posts: [],
+                  single: [],
+                  multi: [],
+                  loading: true,
+                  error: null
+                  };
 
-        // This binding is necessary to make `this` work in the callback
-        this.getPythonHello = this.getPythonHello.bind(this);
-        this.getSTPythonHello = this.getSTPythonHello.bind(this);
-        this.getWeldLoop = this.performSearch.bind(this);
+    // This binding is necessary to make `this` work in the callback
+    this.cmdClear = this.cmdClear.bind(this);
+    this.getSingle = this.getSingle.bind(this);
+    this.getMulti = this.getMulti.bind(this);
+  }
 
-    }
+  personaliseGreeting(greeting) {
+    this.setState({greeting: "Counter: " + greeting + ' ' + this.props.name + '!'});
+  }
 
-    personaliseGreeting(greeting) {
-        this.setState({greeting: "Counter: " + greeting + ' ' + this.props.name + '!'});
-    }
+  cmdClear() {
+    const single = {};
+    const multi = {};
+    this.setState({single});
+    this.setState({multi});
+  }
 
-    getPythonHello() {
-        //$.get(window.location.href + 'hello', (data) => {
-      //var mybody = {"device": "CAMERA", "status" : "OFF"};
-      var mybody = { device:'CAMERA', status:'OFF', test:"123" };
-      const urlString = url + "/fakedata";
-      $.post(urlString, JSON.stringify(mybody), (data) => {
-          const posts = JSON.parse(data);
-          this.setState({posts});
-            //this.personaliseGreeting(x);
-      });
-    }
+  getPythonHello() {
+    //$.get(window.location.href + 'hello', (data) => {
+    //var mybody = {"device": "CAMERA", "status" : "OFF"};
+    var mybody = { device:'CAMERA', status:'OFF', test:"123" };
+    const urlString = url + "/fakedata";
+    $.post(urlString, JSON.stringify(mybody), (data) => {
+      const posts = JSON.parse(data);
+      this.setState({posts});
+      //this.personaliseGreeting(x);
+    });
+  }
 
-    async getSTPythonHello() {
-        //$.get(window.location.href + 'hello', (data) => {
-            var mybody = {"device": "CAMERA", "status" : "OFF"};
-            const urlString = url + "/hello"
-            //const urlString ="http://10.65.4.143/f_weld.html";
-            $.get(urlString, (data) => { 
+  async getSingle() {
+    var mybody = {"device": "CAMERA", "status" : "OFF"};
+    const urlString = url + "/APIsingle"
+    $.get(urlString, (data) => { 
+      const single = JSON.parse(data);
+      this.setState({single});
+    });
+  }
 
-                const posts = JSON.parse(data);
-                this.setState({posts});
-                //this.personaliseGreeting(x);
-            });
+  async getMulti() {
+    var mybody = {"device": "CAMERA", "status" : "OFF"};
+    const urlString = url + "/APImulti"
+    $.get(urlString, (data) => { 
+      const multi = JSON.parse(data);
+      this.setState({multi});
+    });
+  }
+  
+  timer(){
+    var d = new Date();
 
-    }
-
-
-
-    performSearch(searchTerm) {
-        console.log("Perform search using moviedb")
-        const urlString = "http://10.65.4.143/f_weld.html";// + searchTerm
-        alert("Try");
-
-        $.ajax({
-            url: urlString,
-            type: 'GET',
-            dataType: "json",
-            success: displayAll,
-            error: displayAll
-        });
-        
-        function displayAll(data){
-            alert(data);
-        }
-    }
-
-    timer(){
-        var d = new Date();
-
-        this.setState({ clock: d.getHours() + ":" + d.getSeconds() });
-        //this.getPythonHello();
-    }
+    this.setState({ clock: d.getHours() + ":" + d.getSeconds() });
+    //this.getPythonHello();
+  }
       
-    componentDidMount(){
-        this.intervalID = setInterval(this.timer.bind(this), 500);
-    }
+  componentDidMount(){
+    this.intervalID = setInterval(this.timer.bind(this), 500);
+  }
     
-    componentWillUnmount(){
-        clearInterval(this.intervalID);
-    }
+  componentWillUnmount(){
+    clearInterval(this.intervalID);
+  }
 
     
   renderLoading() {
@@ -103,51 +96,68 @@ export default class Hello extends React.Component {
     renderPosts() {
         // Using destructuring to extract the 'error' and 'posts'
         // keys from state. This saves having to write "this.state.X" everwhere.
-        const { posts } = this.state;
+        const { single } = this.state;
         var rows = [];
-        for(var key in posts){
-            if(posts.hasOwnProperty(key)){
-                var out = key + " " + posts[key];
+        for(var key in single){
+            if(single.hasOwnProperty(key)){
+                var out = key + " " + single[key];
                 rows.push(out);
             }
         }  
         return (
-            <div>{rows.map(row => <div> {row} </div>)}</div>
+            <div style={{height:'600', borderRadius:'30px', background:'black', color:'white', overflow:'scroll'}}>{rows.map(row => <p> {row} </p>)}</div>
         );
+      }
+
+      renderSingles() {
+        // Using destructuring to extract the 'error' and 'posts'
+        // keys from state. This saves having to write "this.state.X" everwhere.
+        const { multi } = this.state;
+        var rows = [];
+        for(var key in multi){
+            if(multi.hasOwnProperty(key)){
+                var out = key + " " + multi[key];
+                rows.push(out);
+            }
+        }  
+        return (
+            <div style={{height:'600', borderRadius:'30px', background:'black', color:'white',  overflow:'scroll'}}>{rows.map(row => <p> {row} </p>)}</div>
+        );
+      }
+
+      handleData(data) {
+        const posts = JSON.parse(data);
+        this.setState({posts});
       }
 
     render () {
         return (
             <Grid>
                 <Row>
-                    <Col md={12} mdOffset={5}>
-                        <h1>{this.state.greeting}</h1>
-                        <hr/>
+                    <Col md={12} mdOffset={10}>
                         <h2>{ "TIME: " + this.state.clock}</h2>
-                        {this.renderPosts()}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col md={12} mdOffset={5}>
                         <div>
-                        <Button  variant="contained" color="primary" onClick={this.getPythonHello}>
-                        Say Hello!
+                        <Button variant="contained" color="primary" onClick={this.cmdClear}>
+                        Clear
                         </Button>
-                        <Button  variant="contained" color="primary" onClick={this.getSTPythonHello}>
-                        ST Hello!
+                        <Button  variant="contained" color="primary" onClick={this.getSingle}>
+                        Single Level
                         </Button>
-                        <Button  variant="contained" color="primary" onClick={this.getWeldLoop}>
-                        ST Hello!
+                        <Button  variant="contained" color="primary" onClick={this.getMulti}>
+                        Multi Level
                         </Button>
                         </div>
                     </Col>
                 </Row>
                 <Row>
-                    <Col md={12} mdOffset={5}>
-                        <div>
-                      </div>
+                    <Col md={6} mdOffset={5}>
+                        {this.renderPosts()}
+                    </Col>
+                    <Col md={6} mdOffset={5}>
+                        {this.renderSingles()}
                     </Col>
                 </Row>
+
             </Grid>
         );
     }

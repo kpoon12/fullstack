@@ -1,7 +1,7 @@
 .page-header {
     min-height: 100%;
     text-align: center;
-    background-image: url('../images/header.jpg');
+    /* background-image: url('../images/header.jpg'); */
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -9,7 +9,8 @@
 }
 .header-contents {
     top: 5%;
-    left: 20%;
+    left: 0%;
+    width: 100%;
     position:absolute;
 }
 .header-contents h1 {
@@ -21,8 +22,10 @@
     border-radius: 5px;
     font-weight: 300;
     color: white;
+    margin: 10;
 }
 
 .header-contents button:focus {
     outline: None;
 }
+

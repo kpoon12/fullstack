@@ -60,6 +60,11 @@
     "react-swipeable-views": "0.12.13",
     "css-loader": "^0.28.11",
     "style-loader": "^0.21.0",
-    "webpack": "^3.0.0"
+    "webpack": "^3.0.0",
+    "react-websocket": "2.0.0"
+  },
+  "dependencies": {
+    "react-iframe": "^1.2.0",
+    "sqlite3": "^4.0.2"
   }
 }
